@@ -3,96 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitações | Admin Full View</title>
+    <title>Solicitações | Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#f8fafc] p-4 md:p-8 font-sans">
+<body class="bg-[#f8fafc] p-4 md:p-8 font-sans text-slate-800">
     <div class="max-w-full mx-auto px-4">
         <header class="flex justify-between items-center mb-10">
             <div>
-                <h1 class="text-2xl font-bold text-slate-800 italic">Solicitações <span class="text-blue-600">Admin</span></h1>
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Gestão Completa de Dados</p>
+                <h1 class="text-2xl font-bold italic text-slate-800">Solicitações <span class="text-blue-600">Admin</span></h1>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Gestão Completa e Edição</p>
             </div>
             <a href="index.html" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition shadow-sm">← Voltar</a>
         </header>
 
-        <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-200 mb-10">
-            <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-6">Nova Entrada</h2>
-            
+        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-200 mb-10">
+            <h2 class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-6">Nova Entrada de Dados</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-6">
-                
                 <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Data</label>
-                    <input type="date" id="data_sol" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-600">
-                    <span class="text-[9px] text-slate-400 ml-1">Dia da solicitação</span>
+                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Data</label>
+                    <input type="date" id="data_sol" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
                 </div>
-
                 <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Tipo</label>
-                    <input type="text" id="tipo" placeholder="Ex: Ajuste, Novo" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-                    <span class="text-[9px] text-slate-400 ml-1">Categoria da tarefa</span>
+                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Tipo</label>
+                    <input type="text" id="tipo" placeholder="Ex: Ajuste" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
                 </div>
-
                 <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Local</label>
-                    <input type="text" id="local" placeholder="Ex: Dashboard, API" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-                    <span class="text-[9px] text-slate-400 ml-1">Onde será alterado</span>
+                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Local</label>
+                    <input type="text" id="local" placeholder="Ex: Dashboard" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
                 </div>
-
                 <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Descrição</label>
-                    <input type="text" id="desc" placeholder="O que deve ser feito?" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-                    <span class="text-[9px] text-slate-400 ml-1">Detalhes da mudança</span>
+                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Descrição</label>
+                    <input type="text" id="desc" placeholder="Detalhes..." class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
                 </div>
-
                 <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Prioridade</label>
-                    <select id="prio" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
+                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Prioridade</label>
+                    <select id="prio" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500">
                         <option value="Baixa">Baixa</option>
                         <option value="Média">Média</option>
                         <option value="Alta">Alta</option>
                         <option value="Urgente">Urgente</option>
                     </select>
-                    <span class="text-[9px] text-slate-400 ml-1">Nível de criticidade</span>
                 </div>
-
                 <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Prazo</label>
-                    <input type="text" id="prazo" placeholder="Ex: 5 dias, Imediato" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-                    <span class="text-[9px] text-slate-400 ml-1">Tempo de entrega</span>
+                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Prazo</label>
+                    <input type="text" id="prazo" placeholder="Ex: 5 dias" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
                 </div>
-
                 <div class="flex flex-col gap-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Status</label>
-                    <select id="status" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
+                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Status</label>
+                    <select id="status" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500">
                         <option value="Pendente">Pendente</option>
                         <option value="Em Andamento">Em Andamento</option>
                         <option value="Concluído">Concluído</option>
                     </select>
-                    <span class="text-[9px] text-slate-400 ml-1">Estado atual</span>
                 </div>
-
             </div>
-            
-            <button onclick="adicionar()" class="w-full mt-8 bg-blue-600 text-white font-bold py-4 rounded-2xl hover:bg-blue-700 shadow-xl shadow-blue-100 transition-all text-sm uppercase tracking-[0.2em]">
-                Publicar Solicitação na Base
-            </button>
+            <button onclick="adicionar()" class="w-full mt-8 bg-blue-600 text-white font-bold py-4 rounded-2xl hover:bg-blue-700 shadow-xl shadow-blue-100 transition-all uppercase tracking-widest text-xs">Publicar Solicitação</button>
         </div>
 
         <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-200">
-            <div id="loading" class="py-20 text-center font-medium text-slate-400 animate-pulse tracking-widest uppercase text-[10px]">Sincronizando Dados com Google Sheets...</div>
+            <div id="loading" class="py-20 text-center text-slate-400 animate-pulse tracking-widest text-xs uppercase">Sincronizando...</div>
             <div id="container" class="hidden overflow-x-auto">
                 <table class="w-full text-left table-auto">
-                    <thead class="bg-slate-50 text-slate-400 text-[10px] font-bold uppercase tracking-widest border-b border-slate-100">
+                    <thead class="bg-slate-50 text-slate-400 text-[9px] font-bold uppercase tracking-widest border-b border-slate-100">
                         <tr>
                             <th class="px-6 py-5">Data</th>
                             <th class="px-6 py-5">Tipo</th>
                             <th class="px-6 py-5">Local</th>
-                            <th class="px-6 py-5 min-w-[350px]">Descrição Detalhada</th>
+                            <th class="px-6 py-5 min-w-[300px]">Descrição</th>
                             <th class="px-6 py-5 text-center">Prio.</th>
                             <th class="px-6 py-5 text-center">Status</th>
                             <th class="px-6 py-5">Prazo</th>
-                            <th class="px-6 py-5 text-right">Ação</th>
+                            <th class="px-6 py-5 text-right">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="lista" class="text-sm text-slate-600 divide-y divide-slate-50"></tbody>
@@ -102,61 +83,90 @@
     </div>
 
     <script>
-        const API = 'https://script.google.com/macros/s/AKfycbzqVRtAJCIwGGeZYQ0-MoHGZUGGbfq84F-hZ4zC4fb5EMw10MQ-EBmH6Q8e5VOVNsq1/exec';
+        const API = 'https://script.google.com/macros/s/AKfycbx0nGFrTCDyMdKgraNzuJmPowip6KKE_6xsV37JBqhJCODGepOxBl58C2BsVWETELCv9A/exec';
         const ABA = 'Solicitacoes';
+        let dadosCache = [];
 
         async function carregar() {
             const res = await fetch(`${API}?aba=${ABA}`);
-            const dados = await res.json();
+            dadosCache = await res.json();
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('container').classList.remove('hidden');
-            
-            const lista = document.getElementById('lista');
-            lista.innerHTML = dados.map(item => {
-                const coresStatus = {
-                    'Pendente': 'bg-amber-50 text-amber-600 border-amber-100',
-                    'Em Andamento': 'bg-blue-50 text-blue-600 border-blue-100',
-                    'Concluído': 'bg-emerald-50 text-emerald-600 border-emerald-100'
-                };
-                const statusClass = coresStatus[item.STATUS] || 'bg-slate-50 text-slate-500';
+            renderizarTabela(dadosCache);
+        }
 
-                return `
-                <tr class="hover:bg-blue-50/20 transition-colors align-top">
+        function renderizarTabela(dados) {
+            const lista = document.getElementById('lista');
+            lista.innerHTML = dados.map((item, index) => `
+                <tr id="linha-${item.id_linha}" class="hover:bg-blue-50/20 transition-all align-top">
                     <td class="px-6 py-5 font-bold text-slate-400 text-[10px] whitespace-nowrap">${item['DATA SOLICITACAO'] || '-'}</td>
-                    <td class="px-6 py-5 font-black text-slate-800 text-[10px] uppercase tracking-tighter">${item.TIPO}</td>
+                    <td class="px-6 py-5 font-black text-slate-800 text-[10px] uppercase">${item.TIPO}</td>
                     <td class="px-6 py-5 font-bold text-slate-700">${item.LOCAL}</td>
-                    <td class="px-6 py-5 text-slate-500 leading-relaxed whitespace-pre-wrap break-words text-xs italic">${item.DESCRIÇÃO || '-'}</td>
+                    <td class="px-6 py-5 leading-relaxed whitespace-pre-wrap break-words text-xs italic">${item.DESCRIÇÃO || '-'}</td>
                     <td class="px-6 py-5 text-center">
-                        <span class="text-[10px] font-black uppercase ${item.PRIORIDADE === 'Alta' || item.PRIORIDADE === 'Urgente' ? 'text-red-500' : 'text-slate-400'}">
-                            ${item.PRIORIDADE}
-                        </span>
+                        <span class="text-[9px] font-black uppercase ${item.PRIORIDADE === 'Alta' || item.PRIORIDADE === 'Urgente' ? 'text-red-500' : 'text-slate-400'}">${item.PRIORIDADE}</span>
                     </td>
-                    <td class="px-6 py-5 text-center font-medium">
-                        <span class="px-3 py-1 rounded-full border text-[10px] font-bold ${statusClass}">
-                            ${item.STATUS || 'Pendente'}
-                        </span>
+                    <td class="px-6 py-5 text-center">
+                        <span class="px-2 py-1 rounded-lg border text-[9px] font-bold ${item.STATUS === 'Concluído' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-blue-50 text-blue-600 border-blue-100'}">${item.STATUS}</span>
                     </td>
                     <td class="px-6 py-5 font-bold text-slate-400 text-xs italic">${item.PRAZO}</td>
-                    <td class="px-6 py-5 text-right">
-                        <button onclick="excluir(${item.id_linha})" class="p-2 hover:bg-red-50 rounded-lg text-red-200 hover:text-red-500 transition-all">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                        </button>
+                    <td class="px-6 py-5 text-right flex gap-2 justify-end">
+                        <button onclick="habilitarEdicao(${item.id_linha}, ${index})" class="p-2 text-blue-300 hover:text-blue-600 transition-all"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
+                        <button onclick="excluir(${item.id_linha})" class="p-2 text-red-200 hover:text-red-500 transition-all"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                     </td>
-                </tr>`;
-            }).join('');
+                </tr>
+            `).join('');
+        }
+
+        function habilitarEdicao(idLinha, indexCache) {
+            const item = dadosCache[indexCache];
+            const tr = document.getElementById(`linha-${idLinha}`);
+            tr.innerHTML = `
+                <td class="p-2"><input type="text" id="e-data-${idLinha}" value="${item['DATA SOLICITACAO']}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
+                <td class="p-2"><input type="text" id="e-tipo-${idLinha}" value="${item.TIPO}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
+                <td class="p-2"><input type="text" id="e-local-${idLinha}" value="${item.LOCAL}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
+                <td class="p-2"><textarea id="e-desc-${idLinha}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs">${item.DESCRIÇÃO}</textarea></td>
+                <td class="p-2">
+                    <select id="e-prio-${idLinha}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs">
+                        <option ${item.PRIORIDADE === 'Baixa' ? 'selected' : ''}>Baixa</option>
+                        <option ${item.PRIORIDADE === 'Média' ? 'selected' : ''}>Média</option>
+                        <option ${item.PRIORIDADE === 'Alta' ? 'selected' : ''}>Alta</option>
+                        <option ${item.PRIORIDADE === 'Urgente' ? 'selected' : ''}>Urgente</option>
+                    </select>
+                </td>
+                <td class="p-2">
+                    <select id="e-status-${idLinha}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs">
+                        <option ${item.STATUS === 'Pendente' ? 'selected' : ''}>Pendente</option>
+                        <option ${item.STATUS === 'Em Andamento' ? 'selected' : ''}>Em Andamento</option>
+                        <option ${item.STATUS === 'Concluído' ? 'selected' : ''}>Concluído</option>
+                    </select>
+                </td>
+                <td class="p-2"><input type="text" id="e-prazo-${idLinha}" value="${item.PRAZO}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
+                <td class="px-6 py-5 text-right flex gap-2 justify-end">
+                    <button onclick="salvar(${idLinha})" class="text-emerald-500 font-bold text-[10px] uppercase tracking-tighter hover:underline">Salvar</button>
+                    <button onclick="carregar()" class="text-slate-400 font-bold text-[10px] uppercase tracking-tighter hover:underline">Cancelar</button>
+                </td>
+            `;
+        }
+
+        async function salvar(id) {
+            // Ordem: TIPO, LOCAL, DESCRIÇÃO, PRIORIDADE, PRAZO, STATUS, DATA SOLICITACAO
+            const dados = [
+                document.getElementById(`e-tipo-${id}`).value,
+                document.getElementById(`e-local-${id}`).value,
+                document.getElementById(`e-desc-${id}`).value,
+                document.getElementById(`e-prio-${id}`).value,
+                document.getElementById(`e-prazo-${id}`).value,
+                document.getElementById(`e-status-${id}`).value,
+                document.getElementById(`e-data-${id}`).value
+            ];
+            await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'EDITAR', aba: ABA, id_linha: id, dados: dados }) });
+            setTimeout(() => carregar(), 1000);
         }
 
         async function adicionar() {
-            const btn = event.target;
-            btn.innerText = "Sincronizando com a nuvem...";
-            btn.disabled = true;
-
-            let dataInput = document.getElementById('data_sol').value;
-            if(dataInput) {
-                const parts = dataInput.split('-');
-                dataInput = `${parts[2]}/${parts[1]}/${parts[0]}`;
-            }
-
+            let dt = document.getElementById('data_sol').value;
+            if(dt) dt = dt.split('-').reverse().join('/');
             const dados = [
                 document.getElementById('tipo').value,
                 document.getElementById('local').value,
@@ -164,17 +174,16 @@
                 document.getElementById('prio').value,
                 document.getElementById('prazo').value,
                 document.getElementById('status').value,
-                dataInput
+                dt
             ];
-
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'ADICIONAR', aba: ABA, dados: dados }) });
-            setTimeout(() => location.reload(), 1200);
+            setTimeout(() => location.reload(), 1000);
         }
 
         async function excluir(id) {
-            if(confirm('Remover esta solicitação?')) {
+            if(confirm('Excluir solicitação?')) {
                 await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'EXCLUIR', aba: ABA, id_linha: id }) });
-                setTimeout(() => location.reload(), 800);
+                setTimeout(() => location.reload(), 1000);
             }
         }
         carregar();
