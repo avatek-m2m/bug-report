@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bugs | Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f8fafc] p-4 md:p-8 font-sans">
+    <div class="max-w-5xl mx-auto">
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-800 italic">Report de <span class="text-red-600">Bugs</span></h1>
+                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mt-1">Gestão de Falhas Técnicas</p>
+            </div>
+            <a href="index.html" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 transition shadow-sm uppercase">Sair</a>
+        </header>
+
+        <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-200 mb-10">
+            <h2 class="text-[10px] font-black text-red-600 uppercase tracking-widest mb-6 italic">Abertura de Ticket</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <input type="text" id="tipo" placeholder="Tipo do Erro" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-sm border-none col-span-1">
+                <input type="text" id="desc" placeholder="Descrição da Falha" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-sm border-none col-span-2">
+                <input type="text" id="ticket" placeholder="# Ticket ID" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-sm border-none">
+            </div>
+            <button onclick="adicionar()" class="w-full mt-6 bg-red-600 text-white font-bold py-3 rounded-xl hover:bg-red-700 shadow-lg shadow-red-100 transition-all">Reportar Bug Agora</button>
+        </div>
+
+        <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-slate-200">
+            <div id="loading" class="py-20 text-center font-medium text-slate-400">Carregando tickets...</div>
+            <div id="container" class="hidden overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-[0.1em] border-b border-slate-100">
+                        <tr>
+                            <th class="px-8 py-5">Tipo</th>
+                            <th class="px-8 py-5">Descrição do Erro</th>
+                            <th class="px-8 py-5">ID Ticket</th>
+                            <th class="px-8 py-5 text-right font-black">Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista" class="text-sm text-slate-600 divide-y divide-slate-50"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API = 'https://script.google.com/macros/s/AKfycbzqVRtAJCIwGGeZYQ0-MoHGZUGGbfq84F-hZ4zC4fb5EMw10MQ-EBmH6Q8e5VOVNsq1/exec';
+        const ABA = 'BugReport';
+
+        async function carregar() {
+            const res = await fetch(`${API}?aba=${ABA}`);
+            const dados = await res.json();
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('container').classList.remove('hidden');
+            const lista = document.getElementById('lista');
+            lista.innerHTML = dados.map(item => `
+                <tr class="hover:bg-red-50/30 transition-colors group">
+                    <td class="px-8 py-5 font-bold text-red-600 uppercase text-xs">${item.TIPO}</td>
+                    <td class="px-8 py-5 font-medium text-slate-600">${item.DESCRICAO}</td>
+                    <td class="px-8 py-5"><span class="bg-slate-100 text-slate-600 px-3 py-1 rounded font-mono font-bold">${item.TICKET}</span></td>
+                    <td class="px-8 py-5 text-right">
+                        <button onclick="excluir(${item.id_linha})" class="p-2 bg-slate-50 rounded-lg text-slate-300 hover:bg-red-600 hover:text-white transition-all">
+                            Excluir
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function adicionar() {
+            const dados = [document.getElementById('tipo').value, document.getElementById('desc').value, document.getElementById('ticket').value];
+            await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'ADICIONAR', aba: ABA, dados: dados }) });
+            setTimeout(() => location.reload(), 1000);
+        }
+
+        async function excluir(id) {
+            if(confirm('Deseja deletar este reporte de bug?')) {
+                await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'EXCLUIR', aba: ABA, id_linha: id }) });
+                setTimeout(() => location.reload(), 1000);
+            }
+        }
+        carregar();
+    </script>
+</body>
+</html>
