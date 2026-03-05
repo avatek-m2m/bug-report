@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitações | Admin</title>
+    <title>Solicitações | Admin Full View</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-[#f8fafc] p-4 md:p-8 font-sans">
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-full mx-auto px-4">
         <header class="flex justify-between items-center mb-10">
             <div>
                 <h1 class="text-2xl font-bold text-slate-800 italic">Solicitações <span class="text-blue-600">Admin</span></h1>
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Gestão de Alterações e Status</p>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Visão Completa de Descrições</p>
             </div>
             <a href="index.html" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition shadow-sm">← Voltar</a>
         </header>
 
         <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-200 mb-10">
-            <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-6 text-center md:text-left">Nova Entrada de Fluxo</h2>
+            <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-6">Nova Entrada</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 <input type="text" id="tipo" placeholder="Tipo" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
                 <input type="text" id="local" placeholder="Local" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
                 <input type="text" id="desc" placeholder="Descrição" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-                
                 <select id="prio" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
                     <option value="" disabled selected>Prioridade</option>
                     <option value="Baixa">Baixa</option>
@@ -30,9 +29,7 @@
                     <option value="Alta">Alta</option>
                     <option value="Urgente">Urgente</option>
                 </select>
-
                 <input type="text" id="prazo" placeholder="Prazo" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-
                 <select id="status" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
                     <option value="Pendente">Pendente</option>
                     <option value="Em Andamento">Em Andamento</option>
@@ -44,17 +41,18 @@
         </div>
 
         <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-slate-200">
-            <div id="loading" class="py-20 text-center font-medium text-slate-400 tracking-widest animate-pulse">Sincronizando...</div>
+            <div id="loading" class="py-20 text-center font-medium text-slate-400 animate-pulse tracking-widest">Sincronizando Dados...</div>
             <div id="container" class="hidden overflow-x-auto">
-                <table class="w-full text-left">
+                <table class="w-full text-left table-auto">
                     <thead class="bg-slate-50 text-slate-400 text-[10px] font-bold uppercase tracking-widest border-b border-slate-100">
                         <tr>
-                            <th class="px-8 py-5">Tipo</th>
-                            <th class="px-8 py-5 text-blue-600">Local / Descrição</th>
-                            <th class="px-8 py-5 text-center">Prioridade</th>
-                            <th class="px-8 py-5 text-center">Status</th>
-                            <th class="px-8 py-5">Prazo</th>
-                            <th class="px-8 py-5 text-right">Ação</th>
+                            <th class="px-6 py-5">Tipo</th>
+                            <th class="px-6 py-5">Local</th>
+                            <th class="px-6 py-5 min-w-[300px]">Descrição Detalhada</th>
+                            <th class="px-6 py-5 text-center">Prioridade</th>
+                            <th class="px-6 py-5 text-center">Status</th>
+                            <th class="px-6 py-5">Prazo</th>
+                            <th class="px-6 py-5 text-right">Ação</th>
                         </tr>
                     </thead>
                     <tbody id="lista" class="text-sm text-slate-600 divide-y divide-slate-50"></tbody>
@@ -75,7 +73,6 @@
             
             const lista = document.getElementById('lista');
             lista.innerHTML = dados.map(item => {
-                // Cores dinâmicas para Status
                 const coresStatus = {
                     'Pendente': 'bg-amber-50 text-amber-600 border-amber-100',
                     'Em Andamento': 'bg-blue-50 text-blue-600 border-blue-100',
@@ -85,24 +82,22 @@
                 const statusClass = coresStatus[item.STATUS] || 'bg-slate-50 text-slate-500';
 
                 return `
-                <tr class="hover:bg-blue-50/20 transition-colors">
-                    <td class="px-8 py-5 font-black text-slate-400 text-[10px] uppercase">${item.TIPO}</td>
-                    <td class="px-8 py-5">
-                        <div class="font-bold text-slate-800">${item.LOCAL}</div>
-                        <div class="text-xs opacity-60 truncate max-w-xs">${item.DESCRIÇÃO}</div>
-                    </td>
-                    <td class="px-8 py-5 text-center">
+                <tr class="hover:bg-blue-50/20 transition-colors align-top">
+                    <td class="px-6 py-5 font-black text-slate-400 text-[10px] uppercase">${item.TIPO}</td>
+                    <td class="px-6 py-5 font-bold text-slate-800">${item.LOCAL}</td>
+                    <td class="px-6 py-5 text-slate-600 leading-relaxed whitespace-pre-wrap break-words">${item.DESCRIÇÃO || '-'}</td>
+                    <td class="px-6 py-5 text-center">
                         <span class="text-[10px] font-black uppercase ${item.PRIORIDADE === 'Alta' || item.PRIORIDADE === 'Urgente' ? 'text-red-500' : 'text-slate-400'}">
                             ${item.PRIORIDADE}
                         </span>
                     </td>
-                    <td class="px-8 py-5 text-center">
+                    <td class="px-6 py-5 text-center font-medium">
                         <span class="px-3 py-1 rounded-full border text-[10px] font-bold ${statusClass}">
                             ${item.STATUS || 'Pendente'}
                         </span>
                     </td>
-                    <td class="px-8 py-5 font-bold text-slate-400 text-xs italic">${item.PRAZO}</td>
-                    <td class="px-8 py-5 text-right">
+                    <td class="px-6 py-5 font-bold text-slate-400 text-xs italic">${item.PRAZO}</td>
+                    <td class="px-6 py-5 text-right">
                         <button onclick="excluir(${item.id_linha})" class="p-2 hover:bg-red-50 rounded-lg text-red-200 hover:text-red-500 transition-all">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         </button>
@@ -122,7 +117,7 @@
                 document.getElementById('desc').value,
                 document.getElementById('prio').value,
                 document.getElementById('prazo').value,
-                document.getElementById('status').value // Nova Coluna
+                document.getElementById('status').value
             ];
 
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'ADICIONAR', aba: ABA, dados: dados }) });
@@ -130,7 +125,7 @@
         }
 
         async function excluir(id) {
-            if(confirm('Remover esta solicitação permanentemente?')) {
+            if(confirm('Remover esta solicitação?')) {
                 await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'EXCLUIR', aba: ABA, id_linha: id }) });
                 setTimeout(() => location.reload(), 800);
             }
