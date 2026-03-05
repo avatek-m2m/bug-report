@@ -3,80 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitações | Admin</title>
+    <title>Solicitações | Admin Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
 </head>
 <body class="bg-[#f8fafc] p-4 md:p-8 font-sans text-slate-800">
+
+    <div id="overlay">
+        <div class="spinner"></div>
+        <p class="mt-4 text-sm font-bold text-blue-600 animate-pulse uppercase tracking-widest">Sincronizando Base...</p>
+    </div>
+
     <div class="max-w-full mx-auto px-4">
         <header class="flex justify-between items-center mb-10">
             <div>
                 <h1 class="text-2xl font-bold italic text-slate-800">Solicitações <span class="text-blue-600">Admin</span></h1>
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Gestão Completa e Edição</p>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Gestão de Alterações e Status</p>
             </div>
             <a href="index.html" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition shadow-sm">← Voltar</a>
         </header>
 
         <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-200 mb-10">
-            <h2 class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-6">Nova Entrada de Dados</h2>
+            <h2 class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-6 italic text-center md:text-left">Nova Entrada de Fluxo</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-6">
                 <div class="flex flex-col gap-1">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Data</label>
-                    <input type="date" id="data_sol" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">Data</label>
+                    <input type="date" id="data_sol" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-600">
+                    <span class="text-[8px] text-slate-400 ml-1">Dia do pedido</span>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Tipo</label>
+                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">Tipo</label>
                     <input type="text" id="tipo" placeholder="Ex: Ajuste" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <span class="text-[8px] text-slate-400 ml-1">Categoria</span>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Local</label>
+                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">Local</label>
                     <input type="text" id="local" placeholder="Ex: Dashboard" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <span class="text-[8px] text-slate-400 ml-1">Página/Módulo</span>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Descrição</label>
-                    <input type="text" id="desc" placeholder="Detalhes..." class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">Descrição</label>
+                    <input type="text" id="desc" placeholder="O que fazer?" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <span class="text-[8px] text-slate-400 ml-1">Detalhes técnicos</span>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Prioridade</label>
-                    <select id="prio" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500">
+                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">Prio.</label>
+                    <select id="prio" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
                         <option value="Baixa">Baixa</option>
                         <option value="Média">Média</option>
                         <option value="Alta">Alta</option>
                         <option value="Urgente">Urgente</option>
                     </select>
+                    <span class="text-[8px] text-slate-400 ml-1">Urgência</span>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Prazo</label>
+                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">Prazo</label>
                     <input type="text" id="prazo" placeholder="Ex: 5 dias" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <span class="text-[8px] text-slate-400 ml-1">Entrega esperada</span>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">Status</label>
-                    <select id="status" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500">
+                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">Status</label>
+                    <select id="status" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
                         <option value="Pendente">Pendente</option>
                         <option value="Em Andamento">Em Andamento</option>
                         <option value="Concluído">Concluído</option>
                     </select>
+                    <span class="text-[8px] text-slate-400 ml-1">Estado atual</span>
                 </div>
             </div>
-            <button onclick="adicionar()" class="w-full mt-8 bg-blue-600 text-white font-bold py-4 rounded-2xl hover:bg-blue-700 shadow-xl shadow-blue-100 transition-all uppercase tracking-widest text-xs">Publicar Solicitação</button>
+            <button onclick="adicionar()" class="w-full mt-8 bg-blue-600 text-white font-bold py-4 rounded-2xl hover:bg-blue-700 shadow-xl shadow-blue-100 transition-all uppercase tracking-widest text-xs">Publicar na Base de Dados</button>
         </div>
 
         <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-200">
-            <div id="loading" class="py-20 text-center text-slate-400 animate-pulse tracking-widest text-xs uppercase">Sincronizando...</div>
-            <div id="container" class="hidden overflow-x-auto">
+            <div id="loading-table" class="py-20 text-center text-slate-400 animate-pulse tracking-widest text-[10px] uppercase font-bold">Consultando Google Sheets...</div>
+            <div id="container" class="hidden overflow-x-auto custom-scrollbar">
                 <table class="w-full text-left table-auto">
                     <thead class="bg-slate-50 text-slate-400 text-[9px] font-bold uppercase tracking-widest border-b border-slate-100">
                         <tr>
                             <th class="px-6 py-5">Data</th>
                             <th class="px-6 py-5">Tipo</th>
                             <th class="px-6 py-5">Local</th>
-                            <th class="px-6 py-5 min-w-[300px]">Descrição</th>
+                            <th class="px-6 py-5 min-w-[350px]">Descrição Completa</th>
                             <th class="px-6 py-5 text-center">Prio.</th>
                             <th class="px-6 py-5 text-center">Status</th>
                             <th class="px-6 py-5">Prazo</th>
                             <th class="px-6 py-5 text-right">Ações</th>
                         </tr>
                     </thead>
-                    <tbody id="lista" class="text-sm text-slate-600 divide-y divide-slate-50"></tbody>
+                    <tbody id="lista" class="text-sm text-slate-600 divide-y divide-slate-50 font-medium"></tbody>
                 </table>
             </div>
         </div>
@@ -87,47 +124,52 @@
         const ABA = 'Solicitacoes';
         let dadosCache = [];
 
+        function toggleOverlay(show) { document.getElementById('overlay').style.display = show ? 'flex' : 'none'; }
+
         async function carregar() {
             const res = await fetch(`${API}?aba=${ABA}`);
             dadosCache = await res.json();
-            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('loading-table').classList.add('hidden');
             document.getElementById('container').classList.remove('hidden');
             renderizarTabela(dadosCache);
+            toggleOverlay(false);
         }
 
         function renderizarTabela(dados) {
             const lista = document.getElementById('lista');
-            lista.innerHTML = dados.map((item, index) => `
-                <tr id="linha-${item.id_linha}" class="hover:bg-blue-50/20 transition-all align-top">
-                    <td class="px-6 py-5 font-bold text-slate-400 text-[10px] whitespace-nowrap">${item['DATA SOLICITACAO'] || '-'}</td>
-                    <td class="px-6 py-5 font-black text-slate-800 text-[10px] uppercase">${item.TIPO}</td>
-                    <td class="px-6 py-5 font-bold text-slate-700">${item.LOCAL}</td>
-                    <td class="px-6 py-5 leading-relaxed whitespace-pre-wrap break-words text-xs italic">${item.DESCRIÇÃO || '-'}</td>
-                    <td class="px-6 py-5 text-center">
-                        <span class="text-[9px] font-black uppercase ${item.PRIORIDADE === 'Alta' || item.PRIORIDADE === 'Urgente' ? 'text-red-500' : 'text-slate-400'}">${item.PRIORIDADE}</span>
-                    </td>
-                    <td class="px-6 py-5 text-center">
-                        <span class="px-2 py-1 rounded-lg border text-[9px] font-bold ${item.STATUS === 'Concluído' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-blue-50 text-blue-600 border-blue-100'}">${item.STATUS}</span>
-                    </td>
+            lista.innerHTML = dados.map((item, index) => {
+                const statusColors = {
+                    'Concluído': 'bg-emerald-50 text-emerald-600 border-emerald-100',
+                    'Em Andamento': 'bg-blue-50 text-blue-600 border-blue-100',
+                    'Pendente': 'bg-amber-50 text-amber-600 border-amber-100'
+                };
+                return `
+                <tr id="linha-${item.id_linha}" class="hover:bg-slate-50/50 transition-all align-top">
+                    <td class="px-6 py-5 text-slate-400 text-[10px] font-bold whitespace-nowrap uppercase italic">${item['DATA SOLICITACAO'] || '-'}</td>
+                    <td class="px-6 py-5 font-black text-slate-900 text-[10px] uppercase tracking-tighter">${item.TIPO}</td>
+                    <td class="px-6 py-5 font-bold text-slate-700 italic">${item.LOCAL}</td>
+                    <td class="px-6 py-5 leading-relaxed whitespace-pre-wrap break-words text-xs text-slate-500">${item.DESCRIÇÃO || '-'}</td>
+                    <td class="px-6 py-5 text-center"><span class="text-[9px] font-black uppercase ${item.PRIORIDADE === 'Alta' || item.PRIORIDADE === 'Urgente' ? 'text-red-500' : 'text-slate-400'}">${item.PRIORIDADE}</span></td>
+                    <td class="px-6 py-5 text-center"><span class="px-2 py-1 rounded-lg border text-[9px] font-bold ${statusColors[item.STATUS] || ''}">${item.STATUS}</span></td>
                     <td class="px-6 py-5 font-bold text-slate-400 text-xs italic">${item.PRAZO}</td>
-                    <td class="px-6 py-5 text-right flex gap-2 justify-end">
-                        <button onclick="habilitarEdicao(${item.id_linha}, ${index})" class="p-2 text-blue-300 hover:text-blue-600 transition-all"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
-                        <button onclick="excluir(${item.id_linha})" class="p-2 text-red-200 hover:text-red-500 transition-all"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                    <td class="px-6 py-5 text-right flex gap-3 justify-end">
+                        <button onclick="habilitarEdicao(${item.id_linha}, ${index})" class="text-blue-300 hover:text-blue-600 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
+                        <button onclick="excluir(${item.id_linha})" class="text-red-200 hover:text-red-500 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                     </td>
-                </tr>
-            `).join('');
+                </tr>`;
+            }).join('');
         }
 
-        function habilitarEdicao(idLinha, indexCache) {
-            const item = dadosCache[indexCache];
-            const tr = document.getElementById(`linha-${idLinha}`);
+        function habilitarEdicao(id, idx) {
+            const item = dadosCache[idx];
+            const tr = document.getElementById(`linha-${id}`);
             tr.innerHTML = `
-                <td class="p-2"><input type="text" id="e-data-${idLinha}" value="${item['DATA SOLICITACAO']}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
-                <td class="p-2"><input type="text" id="e-tipo-${idLinha}" value="${item.TIPO}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
-                <td class="p-2"><input type="text" id="e-local-${idLinha}" value="${item.LOCAL}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
-                <td class="p-2"><textarea id="e-desc-${idLinha}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs">${item.DESCRIÇÃO}</textarea></td>
+                <td class="p-2"><input type="text" id="e-dt-${id}" value="${item['DATA SOLICITACAO']}" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px]"></td>
+                <td class="p-2"><input type="text" id="e-tp-${id}" value="${item.TIPO}" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px]"></td>
+                <td class="p-2"><input type="text" id="e-lc-${id}" value="${item.LOCAL}" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px]"></td>
+                <td class="p-2"><textarea id="e-ds-${id}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs">${item.DESCRIÇÃO}</textarea></td>
                 <td class="p-2">
-                    <select id="e-prio-${idLinha}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs">
+                    <select id="e-pr-${id}" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px]">
                         <option ${item.PRIORIDADE === 'Baixa' ? 'selected' : ''}>Baixa</option>
                         <option ${item.PRIORIDADE === 'Média' ? 'selected' : ''}>Média</option>
                         <option ${item.PRIORIDADE === 'Alta' ? 'selected' : ''}>Alta</option>
@@ -135,30 +177,27 @@
                     </select>
                 </td>
                 <td class="p-2">
-                    <select id="e-status-${idLinha}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs">
+                    <select id="e-st-${id}" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px]">
                         <option ${item.STATUS === 'Pendente' ? 'selected' : ''}>Pendente</option>
                         <option ${item.STATUS === 'Em Andamento' ? 'selected' : ''}>Em Andamento</option>
                         <option ${item.STATUS === 'Concluído' ? 'selected' : ''}>Concluído</option>
                     </select>
                 </td>
-                <td class="p-2"><input type="text" id="e-prazo-${idLinha}" value="${item.PRAZO}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
-                <td class="px-6 py-5 text-right flex gap-2 justify-end">
-                    <button onclick="salvar(${idLinha})" class="text-emerald-500 font-bold text-[10px] uppercase tracking-tighter hover:underline">Salvar</button>
-                    <button onclick="carregar()" class="text-slate-400 font-bold text-[10px] uppercase tracking-tighter hover:underline">Cancelar</button>
+                <td class="p-2"><input type="text" id="e-pz-${id}" value="${item.PRAZO}" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px]"></td>
+                <td class="px-6 py-5 text-right flex flex-col gap-1 uppercase font-black text-[9px]">
+                    <button onclick="salvar(${id})" class="text-blue-600 hover:underline">Salvar</button>
+                    <button onclick="carregar()" class="text-slate-400 hover:underline">Cancelar</button>
                 </td>
             `;
         }
 
         async function salvar(id) {
-            // Ordem: TIPO, LOCAL, DESCRIÇÃO, PRIORIDADE, PRAZO, STATUS, DATA SOLICITACAO
+            toggleOverlay(true);
             const dados = [
-                document.getElementById(`e-tipo-${id}`).value,
-                document.getElementById(`e-local-${id}`).value,
-                document.getElementById(`e-desc-${id}`).value,
-                document.getElementById(`e-prio-${id}`).value,
-                document.getElementById(`e-prazo-${id}`).value,
-                document.getElementById(`e-status-${id}`).value,
-                document.getElementById(`e-data-${id}`).value
+                document.getElementById(`e-tp-${id}`).value, document.getElementById(`e-lc-${id}`).value,
+                document.getElementById(`e-ds-${id}`).value, document.getElementById(`e-pr-${id}`).value,
+                document.getElementById(`e-pz-${id}`).value, document.getElementById(`e-st-${id}`).value,
+                document.getElementById(`e-dt-${id}`).value
             ];
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'EDITAR', aba: ABA, id_linha: id, dados: dados }) });
             setTimeout(() => carregar(), 1000);
@@ -166,22 +205,21 @@
 
         async function adicionar() {
             let dt = document.getElementById('data_sol').value;
-            if(dt) dt = dt.split('-').reverse().join('/');
+            if(!dt) return alert("Preencha a data!");
+            toggleOverlay(true);
+            dt = dt.split('-').reverse().join('/');
             const dados = [
-                document.getElementById('tipo').value,
-                document.getElementById('local').value,
-                document.getElementById('desc').value,
-                document.getElementById('prio').value,
-                document.getElementById('prazo').value,
-                document.getElementById('status').value,
-                dt
+                document.getElementById('tipo').value, document.getElementById('local').value,
+                document.getElementById('desc').value, document.getElementById('prio').value,
+                document.getElementById('prazo').value, document.getElementById('status').value, dt
             ];
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'ADICIONAR', aba: ABA, dados: dados }) });
             setTimeout(() => location.reload(), 1000);
         }
 
         async function excluir(id) {
-            if(confirm('Excluir solicitação?')) {
+            if(confirm('Excluir permanentemente?')) {
+                toggleOverlay(true);
                 await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'EXCLUIR', aba: ABA, id_linha: id }) });
                 setTimeout(() => location.reload(), 1000);
             }
