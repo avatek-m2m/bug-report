@@ -18,38 +18,77 @@
 
         <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-200 mb-10">
             <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-6">Nova Entrada</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-3">
-                <input type="text" id="tipo" placeholder="Tipo" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-                <input type="text" id="local" placeholder="Local" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-                <input type="text" id="desc" placeholder="Descrição" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-                <select id="prio" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
-                    <option value="" disabled selected>Prioridade</option>
-                    <option value="Baixa">Baixa</option>
-                    <option value="Média">Média</option>
-                    <option value="Alta">Alta</option>
-                    <option value="Urgente">Urgente</option>
-                </select>
-                <input type="text" id="prazo" placeholder="Prazo" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
-                <select id="status" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
-                    <option value="Pendente">Pendente</option>
-                    <option value="Em Andamento">Em Andamento</option>
-                    <option value="Concluído">Concluído</option>
-                </select>
-                <input type="date" id="data_sol" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-6">
+                
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Data</label>
+                    <input type="date" id="data_sol" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-600">
+                    <span class="text-[9px] text-slate-400 ml-1">Dia da solicitação</span>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Tipo</label>
+                    <input type="text" id="tipo" placeholder="Ex: Ajuste, Novo" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <span class="text-[9px] text-slate-400 ml-1">Categoria da tarefa</span>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Local</label>
+                    <input type="text" id="local" placeholder="Ex: Dashboard, API" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <span class="text-[9px] text-slate-400 ml-1">Onde será alterado</span>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Descrição</label>
+                    <input type="text" id="desc" placeholder="O que deve ser feito?" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <span class="text-[9px] text-slate-400 ml-1">Detalhes da mudança</span>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Prioridade</label>
+                    <select id="prio" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
+                        <option value="Baixa">Baixa</option>
+                        <option value="Média">Média</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Urgente">Urgente</option>
+                    </select>
+                    <span class="text-[9px] text-slate-400 ml-1">Nível de criticidade</span>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Prazo</label>
+                    <input type="text" id="prazo" placeholder="Ex: 5 dias, Imediato" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none">
+                    <span class="text-[9px] text-slate-400 ml-1">Tempo de entrega</span>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Status</label>
+                    <select id="status" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-sm border-none text-slate-500 font-medium">
+                        <option value="Pendente">Pendente</option>
+                        <option value="Em Andamento">Em Andamento</option>
+                        <option value="Concluído">Concluído</option>
+                    </select>
+                    <span class="text-[9px] text-slate-400 ml-1">Estado atual</span>
+                </div>
+
             </div>
-            <button onclick="adicionar()" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all text-sm uppercase tracking-widest">Publicar Solicitação</button>
+            
+            <button onclick="adicionar()" class="w-full mt-8 bg-blue-600 text-white font-bold py-4 rounded-2xl hover:bg-blue-700 shadow-xl shadow-blue-100 transition-all text-sm uppercase tracking-[0.2em]">
+                Publicar Solicitação na Base
+            </button>
         </div>
 
-        <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-slate-200">
-            <div id="loading" class="py-20 text-center font-medium text-slate-400 animate-pulse tracking-widest">Sincronizando Dados...</div>
-            <div id="container" class="hidden overflow-x-auto custom-scrollbar">
+        <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-200">
+            <div id="loading" class="py-20 text-center font-medium text-slate-400 animate-pulse tracking-widest uppercase text-[10px]">Sincronizando Dados com Google Sheets...</div>
+            <div id="container" class="hidden overflow-x-auto">
                 <table class="w-full text-left table-auto">
                     <thead class="bg-slate-50 text-slate-400 text-[10px] font-bold uppercase tracking-widest border-b border-slate-100">
                         <tr>
                             <th class="px-6 py-5">Data</th>
                             <th class="px-6 py-5">Tipo</th>
                             <th class="px-6 py-5">Local</th>
-                            <th class="px-6 py-5 min-w-[300px]">Descrição Detalhada</th>
+                            <th class="px-6 py-5 min-w-[350px]">Descrição Detalhada</th>
                             <th class="px-6 py-5 text-center">Prio.</th>
                             <th class="px-6 py-5 text-center">Status</th>
                             <th class="px-6 py-5">Prazo</th>
@@ -86,7 +125,7 @@
                     <td class="px-6 py-5 font-bold text-slate-400 text-[10px] whitespace-nowrap">${item['DATA SOLICITACAO'] || '-'}</td>
                     <td class="px-6 py-5 font-black text-slate-800 text-[10px] uppercase tracking-tighter">${item.TIPO}</td>
                     <td class="px-6 py-5 font-bold text-slate-700">${item.LOCAL}</td>
-                    <td class="px-6 py-5 text-slate-500 leading-relaxed whitespace-pre-wrap break-words text-xs">${item.DESCRIÇÃO || '-'}</td>
+                    <td class="px-6 py-5 text-slate-500 leading-relaxed whitespace-pre-wrap break-words text-xs italic">${item.DESCRIÇÃO || '-'}</td>
                     <td class="px-6 py-5 text-center">
                         <span class="text-[10px] font-black uppercase ${item.PRIORIDADE === 'Alta' || item.PRIORIDADE === 'Urgente' ? 'text-red-500' : 'text-slate-400'}">
                             ${item.PRIORIDADE}
@@ -109,10 +148,9 @@
 
         async function adicionar() {
             const btn = event.target;
-            btn.innerText = "Enviando...";
+            btn.innerText = "Sincronizando com a nuvem...";
             btn.disabled = true;
 
-            // Pega a data e formata se necessário (AAAA-MM-DD para DD/MM/AAAA)
             let dataInput = document.getElementById('data_sol').value;
             if(dataInput) {
                 const parts = dataInput.split('-');
@@ -126,7 +164,7 @@
                 document.getElementById('prio').value,
                 document.getElementById('prazo').value,
                 document.getElementById('status').value,
-                dataInput // Sétima coluna
+                dataInput
             ];
 
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'ADICIONAR', aba: ABA, dados: dados }) });
