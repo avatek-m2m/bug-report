@@ -6,23 +6,23 @@
     <title>Bugs | Admin Técnico</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        #overlay {
+        #loader-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255, 255, 255, 0.85);
-            z-index: 9999;
+            z-index: 10000;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(2px);
         }
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #dc2626; /* Vermelho Bug */
+            border-top: 4px solid #dc2626;
             border-radius: 50%;
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -30,9 +30,9 @@
 </head>
 <body class="bg-[#f8fafc] p-4 md:p-8 font-sans text-slate-800">
 
-    <div id="overlay">
+    <div id="loader-overlay">
         <div class="spinner"></div>
-        <p class="mt-4 text-sm font-bold text-red-600 animate-pulse uppercase tracking-[0.2em]">Sincronizando Ticket...</p>
+        <p class="mt-4 text-sm font-bold text-red-600 animate-pulse uppercase tracking-widest">Sincronizando Ticket...</p>
     </div>
 
     <div class="max-w-5xl mx-auto">
@@ -47,25 +47,16 @@
         <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-200 mb-10">
             <h2 class="text-[10px] font-black text-red-600 uppercase tracking-widest mb-6 italic">Abertura de Ticket</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="flex flex-col gap-1">
-                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">Tipo</label>
-                    <input type="text" id="tipo" placeholder="Ex: Erro 404" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-sm border-none">
-                </div>
-                <div class="flex flex-col gap-1 col-span-2">
-                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">Descrição</label>
-                    <input type="text" id="desc" placeholder="O que aconteceu?" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-sm border-none">
-                </div>
-                <div class="flex flex-col gap-1">
-                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-1">ID Ticket</label>
-                    <input type="text" id="ticket" placeholder="# 0001" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-sm border-none">
-                </div>
+                <input type="text" id="tipo" placeholder="Tipo do Erro" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-sm border-none">
+                <input type="text" id="desc" placeholder="Descrição da Falha" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-sm border-none col-span-2">
+                <input type="text" id="ticket" placeholder="# Ticket ID" class="bg-slate-50 p-3 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-sm border-none">
             </div>
             <button onclick="adicionar()" class="w-full mt-8 bg-red-600 text-white font-bold py-4 rounded-2xl hover:bg-red-700 shadow-xl shadow-red-100 transition-all uppercase text-xs tracking-[0.2em]">Reportar Bug Agora</button>
         </div>
 
         <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-200">
-            <div id="loading-bugs" class="py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px] animate-pulse">Consultando Histórico...</div>
-            <div id="container" class="hidden overflow-x-auto">
+            <div id="loading-msg" class="py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px] animate-pulse">Consultando Histórico...</div>
+            <div id="container-tabela" class="hidden overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-[0.1em] border-b border-slate-100">
                         <tr>
@@ -86,15 +77,17 @@
         const ABA = 'BugReport';
         let cacheBugs = [];
 
-        function toggleOverlay(show) { document.getElementById('overlay').style.display = show ? 'flex' : 'none'; }
+        function showLoading(status) {
+            document.getElementById('loader-overlay').style.display = status ? 'flex' : 'none';
+        }
 
         async function carregar() {
             const res = await fetch(`${API}?aba=${ABA}`);
             cacheBugs = await res.json();
-            document.getElementById('loading-bugs').classList.add('hidden');
-            document.getElementById('container').classList.remove('hidden');
+            document.getElementById('loading-msg').classList.add('hidden');
+            document.getElementById('container-tabela').classList.remove('hidden');
             renderizarBugs(cacheBugs);
-            toggleOverlay(false);
+            showLoading(false);
         }
 
         function renderizarBugs(dados) {
@@ -103,7 +96,7 @@
                 <tr id="bug-${item.id_linha}" class="hover:bg-red-50/30 transition-all">
                     <td class="px-8 py-5 font-bold text-red-600 uppercase text-[10px] tracking-tighter">${item.TIPO}</td>
                     <td class="px-8 py-5 text-slate-500 text-xs">${item.DESCRICAO}</td>
-                    <td class="px-8 py-5 font-mono text-slate-700 font-black tracking-widest text-[10px]">${item.TICKET}</td>
+                    <td class="px-8 py-5 font-mono text-slate-700 font-black tracking-widest text-[10px] uppercase">${item.TICKET}</td>
                     <td class="px-8 py-5 text-right flex gap-3 justify-end text-[9px] uppercase font-black tracking-widest">
                         <button onclick="editBug(${item.id_linha}, ${index})" class="text-slate-300 hover:text-red-600">Editar</button>
                         <button onclick="excluir(${item.id_linha})" class="text-slate-300 hover:text-red-600">Remover</button>
@@ -114,9 +107,9 @@
         function editBug(id, idx) {
             const bug = cacheBugs[idx];
             document.getElementById(`bug-${id}`).innerHTML = `
-                <td class="p-2"><input type="text" id="e-tp-${id}" value="${bug.TIPO}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
-                <td class="p-2 col-span-2"><input type="text" id="e-ds-${id}" value="${bug.DESCRICAO}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs"></td>
-                <td class="p-2"><input type="text" id="e-tk-${id}" value="${bug.TICKET}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-mono"></td>
+                <td class="p-2"><input type="text" id="e-tp-${id}" value="${bug.TIPO}" class="w-full p-2 bg-white border border-red-100 rounded-lg text-xs font-bold uppercase"></td>
+                <td class="p-2 col-span-2"><input type="text" id="e-ds-${id}" value="${bug.DESCRICAO}" class="w-full p-2 bg-white border border-red-100 rounded-lg text-xs font-medium italic"></td>
+                <td class="p-2"><input type="text" id="e-tk-${id}" value="${bug.TICKET}" class="w-full p-2 bg-white border border-red-100 rounded-lg text-xs font-mono font-bold"></td>
                 <td class="px-8 py-5 text-right flex gap-2 justify-end uppercase text-[9px] font-black italic">
                     <button onclick="salvarBug(${id})" class="text-red-600 hover:underline">Salvar</button>
                     <button onclick="carregar()" class="text-slate-400 hover:underline">Cancelar</button>
@@ -124,24 +117,24 @@
         }
 
         async function salvarBug(id) {
-            toggleOverlay(true);
+            showLoading(true);
             const dados = [document.getElementById(`e-tp-${id}`).value, document.getElementById(`e-ds-${id}`).value, document.getElementById(`e-tk-${id}`).value];
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'EDITAR', aba: ABA, id_linha: id, dados: dados }) });
-            setTimeout(() => carregar(), 1000);
+            setTimeout(() => carregar(), 1500);
         }
 
         async function adicionar() {
-            toggleOverlay(true);
+            showLoading(true);
             const dados = [document.getElementById('tipo').value, document.getElementById('desc').value, document.getElementById('ticket').value];
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'ADICIONAR', aba: ABA, dados: dados }) });
-            setTimeout(() => location.reload(), 1000);
+            setTimeout(() => location.reload(), 1500);
         }
 
         async function excluir(id) {
             if(confirm('Excluir ticket permanentemente?')) {
-                toggleOverlay(true);
+                showLoading(true);
                 await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'EXCLUIR', aba: ABA, id_linha: id }) });
-                setTimeout(() => location.reload(), 1000);
+                setTimeout(() => location.reload(), 1500);
             }
         }
         carregar();
